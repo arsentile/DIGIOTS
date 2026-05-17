@@ -182,6 +182,11 @@ export default function Home() {
               placeholder="Enter your contact email"
               className="flex-1 bg-black border border-white/10 rounded-xl px-5 py-4 outline-none"
             />
+              <p className="text-sm text-gray-400 mt-3">
+                Or Directly Contact Us:
+                <br />
+                aashutosht3107@gmail.com, harsh.digiot@gmail.com or abc@idek.com
+              </p>
 
             <button className="bg-white text-black px-6 py-4 rounded-xl font-semibold hover:bg-gray-200 transition">
               Contact Me
