@@ -3,9 +3,11 @@ import { Menu } from "lucide-react";
 import {
   SignInButton,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 
 export default function Home() {
+  const { isSignedIn } = useUser();
   const products = [
   {
     id: 1,
@@ -88,13 +90,15 @@ export default function Home() {
 
     <div className="flex items-center gap-4">
 
-  <SignInButton mode="modal">
-    <button className="bg-white text-black px-5 py-2 rounded-2xl font-semibold hover:scale-105 transition">
-      Login
-    </button>
-  </SignInButton>
+  {!isSignedIn && (
+    <SignInButton mode="modal">
+      <button className="bg-white text-black px-5 py-2 rounded-2xl font-semibold hover:scale-105 transition">
+        Login
+      </button>
+    </SignInButton>
+  )}
 
-  <UserButton />
+  {isSignedIn && <UserButton />}
 
 </div>
 
