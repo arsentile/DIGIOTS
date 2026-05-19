@@ -82,14 +82,29 @@ export default function UploadPage() {
           className="w-full p-4 rounded-xl bg-zinc-900 border border-white/10 h-40"
         />
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) =>
-            setImage(e.target.files?.[0] || null)
-          }
-          className="w-full"
-        />
+        <label
+  className="
+    flex items-center justify-center
+    w-full p-6
+    border border-dashed border-white/20
+    rounded-2xl cursor-pointer
+    bg-zinc-900 hover:bg-zinc-800
+    transition text-gray-300
+  "
+>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setImage(e.target.files?.[0] || null)
+    }
+    className="hidden"
+  />
+
+  {image
+    ? `Selected: ${image.name}`
+    : "Select File to Upload"}
+</label>
 
         <button
           onClick={handleUpload}
