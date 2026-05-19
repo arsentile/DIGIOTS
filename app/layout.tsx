@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -32,6 +33,44 @@ export default function RootLayout({
   <ClerkProvider>
     {children}
   </ClerkProvider>
+  <Link
+  href="/upload"
+  className="fixed bottom-6 right-6 group z-50"
+>
+  <div
+    className="
+      w-14 h-14
+      rounded-full
+      bg-white
+      text-black
+      flex items-center justify-center
+      text-3xl font-bold
+      shadow-xl
+      transition-all duration-300
+      hover:w-36
+      hover:rounded-2xl
+      overflow-hidden
+    "
+  >
+    <span className="mr-0 group-hover:mr-2 transition-all">
+      +
+    </span>
+
+    <span
+      className="
+        max-w-0
+        opacity-0
+        group-hover:max-w-xs
+        group-hover:opacity-100
+        transition-all duration-300
+        whitespace-nowrap
+        text-base font-semibold
+      "
+    >
+      Upload
+    </span>
+  </div>
+</Link>
 </body>
     </html>
   );
