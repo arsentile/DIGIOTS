@@ -14,7 +14,8 @@ export default function UploadPage() {
 
     setLoading(true);
 
-    const fileName = `${Date.now()}-${image.name}`;
+    const cleanName = image.name.replace(/\s+/g, "-");
+    const fileName = `${Date.now()}-${cleanName}`;
 
     const { error: uploadError } = await supabase.storage
       .from("posts")
@@ -29,7 +30,7 @@ export default function UploadPage() {
 
     const { data } = supabase.storage
       .from("posts")
-      .getPublicUrl(fileName);
+      .getPublicUrl(`uploads/${fileName}`);
 
     const imageUrl = data.publicUrl;
 
