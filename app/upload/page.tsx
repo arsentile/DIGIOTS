@@ -10,55 +10,57 @@ export default function UploadPage() {
   const [loading, setLoading] = useState(false);
 
   async function handleUpload() {
-    if (!image) return;
+  if (!image) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    const cleanName = image.name.replace(/\s+/g, "-");
-    const fileName = `${Date.now()}-${cleanName}`;
+  const fileExt = image.name.split(".").pop();
 
-    const { error: uploadError } = await supabase.storage
+  const fileName = `${Date.now()}.${fileExt}`;
+
+  const { data: uploadData, error: uploadError } =
+    await supabase.storage
       .from("posts")
       .upload(fileName, image);
 
-    if (uploadError) {
-      alert(uploadError.message);
-      console.log(uploadError);
-      setLoading(false);
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from("posts")
-      .getPublicUrl(`uploads/${fileName}`);
-
-    const imageUrl = data.publicUrl;
-
-    const { error: dbError } = await supabase
-      .from("posts")
-      .insert([
-        {
-          title,
-          description,
-          image_url: imageUrl,
-          username: "anonymous",
-        },
-      ]);
-
-    if (dbError) {
-      alert("Database upload failed");
-      console.error(dbError);
-      setLoading(false);
-      return;
-    }
-
-    alert("Post uploaded!");
-
-    setTitle("");
-    setDescription("");
-    setImage(null);
+  if (uploadError) {
+    alert(uploadError.message);
+    console.log(uploadError);
     setLoading(false);
+    return;
   }
+
+  const { data: publicUrlData } = supabase.storage
+    .from("posts")
+    .getPublicUrl(uploadData.path);
+
+  const imageUrl = publicUrlData.publicUrl;
+
+  const { error: dbError } = await supabase
+    .from("posts")
+    .insert([
+      {
+        title,
+        description,
+        image_url: imageUrl,
+        username: "anonymous",
+      },
+    ]);
+
+  if (dbError) {
+    alert(dbError.message);
+    console.log(dbError);
+    setLoading(false);
+    return;
+  }
+
+  alert("Post uploaded!");
+
+  setTitle("");
+  setDescription("");
+  setImage(null);
+  setLoading(false);
+}
 
   return (
     <main className="min-h-screen bg-black text-white p-10">
