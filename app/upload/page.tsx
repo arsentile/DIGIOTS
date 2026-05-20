@@ -21,8 +21,8 @@ export default function UploadPage() {
       .upload(fileName, image);
 
     if (uploadError) {
-      alert("Image upload failed");
-      console.error(uploadError);
+      alert(uploadError.message);
+      console.log(uploadError);
       setLoading(false);
       return;
     }
